@@ -110,6 +110,10 @@ class Screener:
     def compare_modes(self, note_text, criterion_type, criterion_text, n_new=8, k=4):
         """Live mini-benchmark: same prompt, fixed number of new tokens, all three decoders."""
         ids, _ = self._encode(number_note(note_text), criterion_type, criterion_text)
+        warm = ids[:, : min(32, ids.shape[1])]            # warm-up: the first CPU call is always slower
+        self._generate_fixed(warm, "kv_cache", 2, k)
+        if self.draft is not None:
+            self._generate_fixed(warm, "speculative", 3, k)
         rows, ref = [], None
         for mode in ["no_cache", "kv_cache", "speculative"]:
             if mode == "speculative" and self.draft is None:

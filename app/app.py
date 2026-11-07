@@ -146,7 +146,7 @@ def load_logged():
                            "identical": r["identical_to_no_cache"], "accept_rate": r.get("acceptance_rate")})
     df = pd.DataFrame(frames)
     fig, ax = plt.subplots(figsize=(7, 3.2))
-    sub = df[df["file"] == df["file"].iloc[0]]
+    sub = df[df["file"] == df["file"].iloc[-1]]   # plot the most recent benchmark file
     for m, g in sub.groupby("mode"):
         ax.plot(g["prompt_len"], g["total_s"], "o-", label=m)
     ax.set_xlabel("prompt length (tokens)"); ax.set_ylabel("total seconds"); ax.set_yscale("log"); ax.legend(); ax.grid(alpha=.3)
