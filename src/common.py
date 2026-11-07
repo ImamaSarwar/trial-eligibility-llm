@@ -51,12 +51,16 @@ def number_note(text: str) -> dict:
 
 # ---------------------------------------------------------------------- prompts
 def build_user_prompt(note_str: str, criterion_type: str, criterion_text: str) -> str:
+    labels = ", ".join(f'"{l}"' for l in LABELS[criterion_type])
     return (
         "You are screening a patient for a clinical trial.\n\n"
         f"Patient note (sentences are numbered):\n{note_str}\n\n"
         f"Criterion type: {criterion_type}\n"
         f"Criterion: {criterion_text}\n\n"
-        'Answer in JSON with keys "label" and "evidence_sentences" '
+        f"Allowed labels for this {criterion_type} criterion: {labels}.\n"
+        '"not enough information" means the note does not say; '
+        '"not applicable" means the criterion is irrelevant for this patient.\n'
+        'Answer in JSON with keys "label" (exactly one allowed label) and "evidence_sentences" '
         "(a list of sentence numbers from the note)."
     )
 
