@@ -25,5 +25,5 @@ Educational screening prototype - **not** a clinical enrollment decision.
     python -m src.benchmark --tag t4_fp16 --adapter adapters/qwen15b_lora/best
 
 ## Run the app
-    set ADAPTER=<user>/<repo>      (PowerShell: $env:ADAPTER="<user>/<repo>")
+    set ADAPTER=ISarwar/trial-lora      (PowerShell: $env:ADAPTER="ISarwar/trial-lora")
     python app/app.py              # open http://127.0.0.1:7860
