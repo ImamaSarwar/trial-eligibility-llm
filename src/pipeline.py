@@ -18,7 +18,8 @@ def aggregate(results):
     2 any exclusion criterion 'excluded'    -> likely ineligible
     3 any inclusion criterion 'not included'-> likely ineligible
     4 any 'not enough information'          -> needs review (information missing)
-    5 otherwise                             -> likely eligible (preliminary).  'not applicable' is ignored."""
+    5 otherwise                             -> likely eligible (preliminary), with a caution for every exclusion
+    criterion marked 'not excluded' without cited evidence.  'not applicable' is ignored."""
     labels = [(r["type"], r["label"]) for r in results]
     if any(l == "invalid" for _, l in labels):
         return "NEEDS REVIEW - at least one prediction could not be parsed"
@@ -29,7 +30,13 @@ def aggregate(results):
     n = sum(l == "not enough information" for _, l in labels)
     if n:
         return f"NEEDS REVIEW - information is missing for {n} criterion/criteria"
-    return "LIKELY ELIGIBLE (preliminary; all applicable criteria satisfied)"
+    unsup = sum(1 for r in results if r["type"] == "exclusion" and r["label"] == "not excluded"
+                and not r.get("sentence_ids"))
+    msg = "LIKELY ELIGIBLE (preliminary; all applicable criteria satisfied)"
+    if unsup:   # absence of a mention is NOT proof that an exclusion criterion is absent
+        msg += (f" - caution: {unsup} exclusion criterion/criteria were judged 'not excluded' with NO cited "
+                "evidence; absence of a mention is not proof, please verify manually")
+    return msg
 
 
 def explain(label, ids, evidence_text):
