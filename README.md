@@ -27,6 +27,3 @@ Educational screening prototype - **not** a clinical enrollment decision.
 ## Run the app
     set ADAPTER=<user>/<repo>      (PowerShell: $env:ADAPTER="<user>/<repo>")
     python app/app.py              # open http://127.0.0.1:7860
-
-## AI-use statement
-AI assistants (Claude) were used to help draft code; all code was reviewed, tested, and is understood by the author.
