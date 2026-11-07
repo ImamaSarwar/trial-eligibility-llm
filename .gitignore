@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+adapters/
+results/reports/
+.pytest_cache/
+*.safetensors
