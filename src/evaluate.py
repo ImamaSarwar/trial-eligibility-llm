@@ -56,7 +56,8 @@ def main():
                   add_special_tokens=False).to(device)
         with torch.no_grad():
             out = model.generate(**enc, max_new_tokens=args.max_new_tokens, do_sample=False,
-                                 temperature=None, top_p=None, top_k=None, pad_token_id=tok.pad_token_id)
+                                 temperature=None, top_p=None, top_k=None, repetition_penalty=1.0,
+                                 pad_token_id=tok.pad_token_id)
         for j, i in enumerate(idx):
             raw[i] = tok.decode(out[j, enc.input_ids.shape[1]:], skip_special_tokens=True)
         print(f"{min(b + args.batch_size, len(order))}/{len(order)}")
