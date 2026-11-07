@@ -1,0 +1,18 @@
+{
+  "train": {
+    "n": 603,
+    "max": 610,
+    "mean": 315.93200663349916,
+    "p95": 482.0,
+    "n_truncated": 0,
+    "n_lost_gold_evidence": 0
+  },
+  "val": {
+    "n": 206,
+    "max": 444,
+    "mean": 328.6990291262136,
+    "p95": 378.0,
+    "n_truncated": 0,
+    "n_lost_gold_evidence": 0
+  }
+}
